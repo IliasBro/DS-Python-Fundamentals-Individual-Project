@@ -57,8 +57,9 @@ The notebook has 34 cells. The section structure (course requirement — preserv
    - Population analysis (severity mix, age, comorbidity per hospital)
    - Adjusted comparison (grouped by `hospital` and `severity`)
    - Confounding quantification (naive rank vs adjusted rank)
-4b. OLS Regression: predict `length_of_stay_days`; coefficient plot; verifies data-generation parameters
-4c. Logistic Regression: hierarchical blocks (confounders first, hospital second); LR test; odds-ratio table
+4.1 OLS Regression: predict `length_of_stay_days`; coefficient plot; verifies data-generation parameters
+4.2 Logistic Regression on `recovered`: hierarchical blocks (confounders first, hospital second); LR test; odds-ratio table
+4.3 Logistic Regression on `readmitted_30d`: same hierarchical block structure applied to the second binary quality outcome; LR test; odds-ratio table
 5. Results, Validation & Robustness: findings from all analyses plus reproducibility note
 6. Interpretation & Critical Reflection: why stratification falls short, what regression adds, limitations
 7. AI Usage Documentation: transparent log of AI tool usage (required by course)
@@ -125,6 +126,18 @@ Logistic regression on `recovered` (hierarchical):
 - LR test p = 0.87 — hospital does NOT significantly improve fit after severity + comorbidity
 - Hospital_B vs A: OR = 0.947 (95% CI 0.679–1.320), p = 0.75
 - Hospital_C vs A: OR = 0.906 (95% CI 0.631–1.301), p = 0.59
+
+Logistic regression on `readmitted_30d` (hierarchical, Section 4.3):
+- Events: 126 / 1400 readmitted
+- Block 1 pseudo-R2 (McFadden): 0.1101
+- Block 2 pseudo-R2 (McFadden): 0.1108
+- LR test p = 0.75 — hospital does NOT significantly improve fit after severity + comorbidity
+- Severity high vs low: OR = 11.82 (p < 0.001)
+- Severity medium vs low: OR = 5.86 (p < 0.001)
+- Comorbidity: OR = 1.063 per unit, p = 0.26 (NOT significant for readmission — unlike for recovery)
+- Hospital_B vs A: OR = 0.981 (95% CI 0.614–1.568), p = 0.94
+- Hospital_C vs A: OR = 0.834 (95% CI 0.487–1.429), p = 0.51
+- The descriptive within-high-severity flip (Hospital_A worst at 23.7%) does NOT survive joint adjustment for severity + comorbidity. This is a deliberate result, not an error to fix.
 
 ## Key Design Decisions
 
