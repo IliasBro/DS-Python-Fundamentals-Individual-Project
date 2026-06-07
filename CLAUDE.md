@@ -97,6 +97,17 @@ Recovery rate within each severity group:
 Adjusted ranking (unweighted mean of the three severity-group rates):
 - Hospital_A 73.4%, Hospital_B 69.5%, Hospital_C 69.0%
 
+Naive 30-day readmission rate (overall):
+- Hospital_A 6.9%, Hospital_C 7.8%, Hospital_B 11.7%
+
+Readmission rate within each severity group (%):
+
+| Severity | Hospital_A | Hospital_B | Hospital_C |
+|---|---|---|---|
+| low | 1.9 | 0.6 | 2.6 |
+| medium | 9.3 | 12.3 | 8.1 |
+| high | 23.7 | 19.9 | 18.1 |
+
 High-severity share of patients: Hospital_A about 12%, Hospital_B about 35%, Hospital_C about 19%.
 
 True hospital quality effects from `CreateData.ipynb` (`hospital_effect`): A -0.01, B +0.03, C +0.01, so the true order is B > C > A. The severity-only adjustment does NOT recover this order, because comorbidity still differs within severity bands (for example, in the high group B has comorbidity 4.51 vs A 3.78) and because Hospital_A's high-severity group is small (n = 59) and noisy. This unrecovered gap is a deliberate finding, not an error to fix.
